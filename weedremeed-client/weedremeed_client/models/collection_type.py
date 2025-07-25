@@ -11,6 +11,14 @@ class CollectionType(str, Enum):
     PREPROCESSED = "Preprocessed"
     SWATCH = "Swatch"
     UPLOAD = "Upload"
+    YOLOV5_OUTPUT = "YOLOv5 Model Output"
+    EXIF_READER_OUTPUT = "Exif Reader Output"
+    GEOJSON_OUTPUT = "GeoJson Output"
+    ARCHIVE_OUTPUT = "Archive Output"    
+    SHARED_COPY_SOURCE = "Shared Collection Source"
+    UPLOAD_DUPLICATE = "Duplicated Upload"
+    OPAQUE_REFERENCE = "Reference To Base Collection"
+
 
     def __str__(self) -> str:
         return str(self.value)
