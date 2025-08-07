@@ -3,7 +3,7 @@ from enum import Enum
 
 class WorkflowStatus(str, Enum):
     DONE = "DONE"
-    FAIL = "FAIL"
+    FAILED = "FAILED"
     IN_PROGRESS = "IN_PROGRESS"
     NEW = "NEW"
 

@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class WorkflowNodeName(str, Enum):
+    WEEDREMEEDCOPIERTOOL = "WeedremeedCopierTool"
     WEEDREMEEDTOOLARCHIVER = "WeedremeedToolArchiver"
     WEEDREMEEDTOOLBINDCOLLECTION = "WeedremeedToolBindCollection"
     WEEDREMEEDTOOLCOLOURPICKERAWS = "WeedremeedToolColourPickerAWS"
