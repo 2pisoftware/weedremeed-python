@@ -13,10 +13,12 @@ class UploadFileBody:
     Attributes:
         filename (str):
         mime (str):
+        size (float):
     """
 
     filename: str
     mime: str
+    size: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -24,12 +26,15 @@ class UploadFileBody:
 
         mime = self.mime
 
+        size = self.size
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
                 "filename": filename,
                 "mime": mime,
+                "size": size,
             }
         )
 
@@ -42,9 +47,12 @@ class UploadFileBody:
 
         mime = d.pop("mime")
 
+        size = d.pop("size")
+
         upload_file_body = cls(
             filename=filename,
             mime=mime,
+            size=size,
         )
 
         upload_file_body.additional_properties = d
