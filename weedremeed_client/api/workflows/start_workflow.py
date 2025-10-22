@@ -39,26 +39,32 @@ def _parse_response(
     if response.status_code == 204:
         response_204 = cast(None, response.json())
         return response_204
+
     if response.status_code == 400:
         response_400 = StartWorkflowResponse400.from_dict(response.json())
 
         return response_400
+
     if response.status_code == 401:
         response_401 = StartWorkflowResponse401.from_dict(response.json())
 
         return response_401
+
     if response.status_code == 403:
         response_403 = StartWorkflowResponse403.from_dict(response.json())
 
         return response_403
+
     if response.status_code == 404:
         response_404 = StartWorkflowResponse404.from_dict(response.json())
 
         return response_404
+
     if response.status_code == 500:
         response_500 = StartWorkflowResponse500.from_dict(response.json())
 
         return response_500
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:

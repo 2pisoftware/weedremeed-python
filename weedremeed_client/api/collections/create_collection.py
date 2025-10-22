@@ -52,30 +52,37 @@ def _parse_response(
         response_201 = Collection.from_dict(response.json())
 
         return response_201
+
     if response.status_code == 400:
         response_400 = CreateCollectionResponse400.from_dict(response.json())
 
         return response_400
+
     if response.status_code == 401:
         response_401 = CreateCollectionResponse401.from_dict(response.json())
 
         return response_401
+
     if response.status_code == 403:
         response_403 = CreateCollectionResponse403.from_dict(response.json())
 
         return response_403
+
     if response.status_code == 404:
         response_404 = CreateCollectionResponse404.from_dict(response.json())
 
         return response_404
+
     if response.status_code == 409:
         response_409 = CreateCollectionResponse409.from_dict(response.json())
 
         return response_409
+
     if response.status_code == 500:
         response_500 = CreateCollectionResponse500.from_dict(response.json())
 
         return response_500
+
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:
