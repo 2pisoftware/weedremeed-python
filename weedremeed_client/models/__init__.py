@@ -67,6 +67,7 @@ from .list_projects_response_403 import ListProjectsResponse403
 from .list_projects_response_404 import ListProjectsResponse404
 from .list_projects_response_500 import ListProjectsResponse500
 from .mark_an_upload_as_done_mark_an_upload_as_done_ok import MarkAnUploadAsDoneMarkAnUploadAsDoneOk
+from .mark_an_upload_as_done_mark_an_upload_as_done_ok_data import MarkAnUploadAsDoneMarkAnUploadAsDoneOkData
 from .mark_an_upload_as_done_response_400 import MarkAnUploadAsDoneResponse400
 from .mark_an_upload_as_done_response_500 import MarkAnUploadAsDoneResponse500
 from .partial_update_collection_response_400 import PartialUpdateCollectionResponse400
@@ -203,6 +204,7 @@ __all__ = (
     "ListProjectsResponse404",
     "ListProjectsResponse500",
     "MarkAnUploadAsDoneMarkAnUploadAsDoneOk",
+    "MarkAnUploadAsDoneMarkAnUploadAsDoneOkData",
     "MarkAnUploadAsDoneResponse400",
     "MarkAnUploadAsDoneResponse500",
     "PartialUpdateCollectionResponse400",
