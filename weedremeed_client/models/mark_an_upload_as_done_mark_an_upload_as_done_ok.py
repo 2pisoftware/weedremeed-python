@@ -1,8 +1,14 @@
 from collections.abc import Mapping
-from typing import Any, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
+
+if TYPE_CHECKING:
+    from ..models.mark_an_upload_as_done_mark_an_upload_as_done_ok_data import (
+        MarkAnUploadAsDoneMarkAnUploadAsDoneOkData,
+    )
+
 
 T = TypeVar("T", bound="MarkAnUploadAsDoneMarkAnUploadAsDoneOk")
 
@@ -11,20 +17,35 @@ T = TypeVar("T", bound="MarkAnUploadAsDoneMarkAnUploadAsDoneOk")
 class MarkAnUploadAsDoneMarkAnUploadAsDoneOk:
     """
     Attributes:
-        id (str): Attachment ID of the completed upload
+        status (int):
+        success (bool):
+        message (str):
+        data (MarkAnUploadAsDoneMarkAnUploadAsDoneOkData):
     """
 
-    id: str
+    status: int
+    success: bool
+    message: str
+    data: "MarkAnUploadAsDoneMarkAnUploadAsDoneOkData"
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        id = self.id
+        status = self.status
+
+        success = self.success
+
+        message = self.message
+
+        data = self.data.to_dict()
 
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
             {
-                "id": id,
+                "status": status,
+                "success": success,
+                "message": message,
+                "data": data,
             }
         )
 
@@ -32,11 +53,24 @@ class MarkAnUploadAsDoneMarkAnUploadAsDoneOk:
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
+        from ..models.mark_an_upload_as_done_mark_an_upload_as_done_ok_data import (
+            MarkAnUploadAsDoneMarkAnUploadAsDoneOkData,
+        )
+
         d = dict(src_dict)
-        id = d.pop("id")
+        status = d.pop("status")
+
+        success = d.pop("success")
+
+        message = d.pop("message")
+
+        data = MarkAnUploadAsDoneMarkAnUploadAsDoneOkData.from_dict(d.pop("data"))
 
         mark_an_upload_as_done_mark_an_upload_as_done_ok = cls(
-            id=id,
+            status=status,
+            success=success,
+            message=message,
+            data=data,
         )
 
         mark_an_upload_as_done_mark_an_upload_as_done_ok.additional_properties = d
