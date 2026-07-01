@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -16,25 +17,27 @@ from ...types import Response
 def _get_kwargs(
     collection_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/weedremeed-api/collection/{collection_id}",
+        "url": "/weedremeed-api/collection/{collection_id}".format(
+            collection_id=quote(str(collection_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        Collection,
-        GetCollectionResponse400,
-        GetCollectionResponse401,
-        GetCollectionResponse404,
-        GetCollectionResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    Collection
+    | GetCollectionResponse400
+    | GetCollectionResponse401
+    | GetCollectionResponse404
+    | GetCollectionResponse500
+    | None
+):
     if response.status_code == 200:
         response_200 = Collection.from_dict(response.json())
 
@@ -67,15 +70,13 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        Collection,
-        GetCollectionResponse400,
-        GetCollectionResponse401,
-        GetCollectionResponse404,
-        GetCollectionResponse500,
-    ]
+    Collection
+    | GetCollectionResponse400
+    | GetCollectionResponse401
+    | GetCollectionResponse404
+    | GetCollectionResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -88,15 +89,13 @@ def _build_response(
 def sync_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        Collection,
-        GetCollectionResponse400,
-        GetCollectionResponse401,
-        GetCollectionResponse404,
-        GetCollectionResponse500,
-    ]
+    Collection
+    | GetCollectionResponse400
+    | GetCollectionResponse401
+    | GetCollectionResponse404
+    | GetCollectionResponse500
 ]:
     """Get collection
 
@@ -110,7 +109,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Collection, GetCollectionResponse400, GetCollectionResponse401, GetCollectionResponse404, GetCollectionResponse500]]
+        Response[Collection | GetCollectionResponse400 | GetCollectionResponse401 | GetCollectionResponse404 | GetCollectionResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -127,16 +126,15 @@ def sync_detailed(
 def sync(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        Collection,
-        GetCollectionResponse400,
-        GetCollectionResponse401,
-        GetCollectionResponse404,
-        GetCollectionResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    Collection
+    | GetCollectionResponse400
+    | GetCollectionResponse401
+    | GetCollectionResponse404
+    | GetCollectionResponse500
+    | None
+):
     """Get collection
 
      Returns a record of type Collection.
@@ -149,7 +147,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Collection, GetCollectionResponse400, GetCollectionResponse401, GetCollectionResponse404, GetCollectionResponse500]
+        Collection | GetCollectionResponse400 | GetCollectionResponse401 | GetCollectionResponse404 | GetCollectionResponse500
     """
 
     return sync_detailed(
@@ -161,15 +159,13 @@ def sync(
 async def asyncio_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        Collection,
-        GetCollectionResponse400,
-        GetCollectionResponse401,
-        GetCollectionResponse404,
-        GetCollectionResponse500,
-    ]
+    Collection
+    | GetCollectionResponse400
+    | GetCollectionResponse401
+    | GetCollectionResponse404
+    | GetCollectionResponse500
 ]:
     """Get collection
 
@@ -183,7 +179,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Collection, GetCollectionResponse400, GetCollectionResponse401, GetCollectionResponse404, GetCollectionResponse500]]
+        Response[Collection | GetCollectionResponse400 | GetCollectionResponse401 | GetCollectionResponse404 | GetCollectionResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -198,16 +194,15 @@ async def asyncio_detailed(
 async def asyncio(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        Collection,
-        GetCollectionResponse400,
-        GetCollectionResponse401,
-        GetCollectionResponse404,
-        GetCollectionResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    Collection
+    | GetCollectionResponse400
+    | GetCollectionResponse401
+    | GetCollectionResponse404
+    | GetCollectionResponse500
+    | None
+):
     """Get collection
 
      Returns a record of type Collection.
@@ -220,7 +215,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Collection, GetCollectionResponse400, GetCollectionResponse401, GetCollectionResponse404, GetCollectionResponse500]
+        Collection | GetCollectionResponse400 | GetCollectionResponse401 | GetCollectionResponse404 | GetCollectionResponse500
     """
 
     return (

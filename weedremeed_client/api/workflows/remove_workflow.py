@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
@@ -16,26 +17,28 @@ from ...types import Response
 def _get_kwargs(
     workflow_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": f"/weedremeed-api/workflow/{workflow_id}",
+        "url": "/weedremeed-api/workflow/{workflow_id}".format(
+            workflow_id=quote(str(workflow_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        None,
-        RemoveWorkflowResponse400,
-        RemoveWorkflowResponse401,
-        RemoveWorkflowResponse403,
-        RemoveWorkflowResponse404,
-        RemoveWorkflowResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    None
+    | RemoveWorkflowResponse400
+    | RemoveWorkflowResponse401
+    | RemoveWorkflowResponse403
+    | RemoveWorkflowResponse404
+    | RemoveWorkflowResponse500
+    | None
+):
     if response.status_code == 204:
         response_204 = cast(None, response.json())
         return response_204
@@ -72,16 +75,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        None,
-        RemoveWorkflowResponse400,
-        RemoveWorkflowResponse401,
-        RemoveWorkflowResponse403,
-        RemoveWorkflowResponse404,
-        RemoveWorkflowResponse500,
-    ]
+    None
+    | RemoveWorkflowResponse400
+    | RemoveWorkflowResponse401
+    | RemoveWorkflowResponse403
+    | RemoveWorkflowResponse404
+    | RemoveWorkflowResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -94,16 +95,14 @@ def _build_response(
 def sync_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        RemoveWorkflowResponse400,
-        RemoveWorkflowResponse401,
-        RemoveWorkflowResponse403,
-        RemoveWorkflowResponse404,
-        RemoveWorkflowResponse500,
-    ]
+    None
+    | RemoveWorkflowResponse400
+    | RemoveWorkflowResponse401
+    | RemoveWorkflowResponse403
+    | RemoveWorkflowResponse404
+    | RemoveWorkflowResponse500
 ]:
     """Delete workflow
 
@@ -117,7 +116,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, RemoveWorkflowResponse400, RemoveWorkflowResponse401, RemoveWorkflowResponse403, RemoveWorkflowResponse404, RemoveWorkflowResponse500]]
+        Response[None | RemoveWorkflowResponse400 | RemoveWorkflowResponse401 | RemoveWorkflowResponse403 | RemoveWorkflowResponse404 | RemoveWorkflowResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -134,17 +133,16 @@ def sync_detailed(
 def sync(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        RemoveWorkflowResponse400,
-        RemoveWorkflowResponse401,
-        RemoveWorkflowResponse403,
-        RemoveWorkflowResponse404,
-        RemoveWorkflowResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | RemoveWorkflowResponse400
+    | RemoveWorkflowResponse401
+    | RemoveWorkflowResponse403
+    | RemoveWorkflowResponse404
+    | RemoveWorkflowResponse500
+    | None
+):
     """Delete workflow
 
      Deletes a record of type Workflow.
@@ -157,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, RemoveWorkflowResponse400, RemoveWorkflowResponse401, RemoveWorkflowResponse403, RemoveWorkflowResponse404, RemoveWorkflowResponse500]
+        None | RemoveWorkflowResponse400 | RemoveWorkflowResponse401 | RemoveWorkflowResponse403 | RemoveWorkflowResponse404 | RemoveWorkflowResponse500
     """
 
     return sync_detailed(
@@ -169,16 +167,14 @@ def sync(
 async def asyncio_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        RemoveWorkflowResponse400,
-        RemoveWorkflowResponse401,
-        RemoveWorkflowResponse403,
-        RemoveWorkflowResponse404,
-        RemoveWorkflowResponse500,
-    ]
+    None
+    | RemoveWorkflowResponse400
+    | RemoveWorkflowResponse401
+    | RemoveWorkflowResponse403
+    | RemoveWorkflowResponse404
+    | RemoveWorkflowResponse500
 ]:
     """Delete workflow
 
@@ -192,7 +188,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, RemoveWorkflowResponse400, RemoveWorkflowResponse401, RemoveWorkflowResponse403, RemoveWorkflowResponse404, RemoveWorkflowResponse500]]
+        Response[None | RemoveWorkflowResponse400 | RemoveWorkflowResponse401 | RemoveWorkflowResponse403 | RemoveWorkflowResponse404 | RemoveWorkflowResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -207,17 +203,16 @@ async def asyncio_detailed(
 async def asyncio(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        RemoveWorkflowResponse400,
-        RemoveWorkflowResponse401,
-        RemoveWorkflowResponse403,
-        RemoveWorkflowResponse404,
-        RemoveWorkflowResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | RemoveWorkflowResponse400
+    | RemoveWorkflowResponse401
+    | RemoveWorkflowResponse403
+    | RemoveWorkflowResponse404
+    | RemoveWorkflowResponse500
+    | None
+):
     """Delete workflow
 
      Deletes a record of type Workflow.
@@ -230,7 +225,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, RemoveWorkflowResponse400, RemoveWorkflowResponse401, RemoveWorkflowResponse403, RemoveWorkflowResponse404, RemoveWorkflowResponse500]
+        None | RemoveWorkflowResponse400 | RemoveWorkflowResponse401 | RemoveWorkflowResponse403 | RemoveWorkflowResponse404 | RemoveWorkflowResponse500
     """
 
     return (

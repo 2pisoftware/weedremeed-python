@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -36,18 +36,17 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        CreateWorkflowResponse400,
-        CreateWorkflowResponse401,
-        CreateWorkflowResponse403,
-        CreateWorkflowResponse404,
-        CreateWorkflowResponse409,
-        CreateWorkflowResponse500,
-        Workflow,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    CreateWorkflowResponse400
+    | CreateWorkflowResponse401
+    | CreateWorkflowResponse403
+    | CreateWorkflowResponse404
+    | CreateWorkflowResponse409
+    | CreateWorkflowResponse500
+    | Workflow
+    | None
+):
     if response.status_code == 201:
         response_201 = Workflow.from_dict(response.json())
 
@@ -90,17 +89,15 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        CreateWorkflowResponse400,
-        CreateWorkflowResponse401,
-        CreateWorkflowResponse403,
-        CreateWorkflowResponse404,
-        CreateWorkflowResponse409,
-        CreateWorkflowResponse500,
-        Workflow,
-    ]
+    CreateWorkflowResponse400
+    | CreateWorkflowResponse401
+    | CreateWorkflowResponse403
+    | CreateWorkflowResponse404
+    | CreateWorkflowResponse409
+    | CreateWorkflowResponse500
+    | Workflow
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -112,18 +109,16 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowCreate,
 ) -> Response[
-    Union[
-        CreateWorkflowResponse400,
-        CreateWorkflowResponse401,
-        CreateWorkflowResponse403,
-        CreateWorkflowResponse404,
-        CreateWorkflowResponse409,
-        CreateWorkflowResponse500,
-        Workflow,
-    ]
+    CreateWorkflowResponse400
+    | CreateWorkflowResponse401
+    | CreateWorkflowResponse403
+    | CreateWorkflowResponse404
+    | CreateWorkflowResponse409
+    | CreateWorkflowResponse500
+    | Workflow
 ]:
     """Create workflow
 
@@ -137,7 +132,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[CreateWorkflowResponse400, CreateWorkflowResponse401, CreateWorkflowResponse403, CreateWorkflowResponse404, CreateWorkflowResponse409, CreateWorkflowResponse500, Workflow]]
+        Response[CreateWorkflowResponse400 | CreateWorkflowResponse401 | CreateWorkflowResponse403 | CreateWorkflowResponse404 | CreateWorkflowResponse409 | CreateWorkflowResponse500 | Workflow]
     """
 
     kwargs = _get_kwargs(
@@ -153,19 +148,18 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowCreate,
-) -> Optional[
-    Union[
-        CreateWorkflowResponse400,
-        CreateWorkflowResponse401,
-        CreateWorkflowResponse403,
-        CreateWorkflowResponse404,
-        CreateWorkflowResponse409,
-        CreateWorkflowResponse500,
-        Workflow,
-    ]
-]:
+) -> (
+    CreateWorkflowResponse400
+    | CreateWorkflowResponse401
+    | CreateWorkflowResponse403
+    | CreateWorkflowResponse404
+    | CreateWorkflowResponse409
+    | CreateWorkflowResponse500
+    | Workflow
+    | None
+):
     """Create workflow
 
      Creates a new record of type Workflow.
@@ -178,7 +172,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[CreateWorkflowResponse400, CreateWorkflowResponse401, CreateWorkflowResponse403, CreateWorkflowResponse404, CreateWorkflowResponse409, CreateWorkflowResponse500, Workflow]
+        CreateWorkflowResponse400 | CreateWorkflowResponse401 | CreateWorkflowResponse403 | CreateWorkflowResponse404 | CreateWorkflowResponse409 | CreateWorkflowResponse500 | Workflow
     """
 
     return sync_detailed(
@@ -189,18 +183,16 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowCreate,
 ) -> Response[
-    Union[
-        CreateWorkflowResponse400,
-        CreateWorkflowResponse401,
-        CreateWorkflowResponse403,
-        CreateWorkflowResponse404,
-        CreateWorkflowResponse409,
-        CreateWorkflowResponse500,
-        Workflow,
-    ]
+    CreateWorkflowResponse400
+    | CreateWorkflowResponse401
+    | CreateWorkflowResponse403
+    | CreateWorkflowResponse404
+    | CreateWorkflowResponse409
+    | CreateWorkflowResponse500
+    | Workflow
 ]:
     """Create workflow
 
@@ -214,7 +206,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[CreateWorkflowResponse400, CreateWorkflowResponse401, CreateWorkflowResponse403, CreateWorkflowResponse404, CreateWorkflowResponse409, CreateWorkflowResponse500, Workflow]]
+        Response[CreateWorkflowResponse400 | CreateWorkflowResponse401 | CreateWorkflowResponse403 | CreateWorkflowResponse404 | CreateWorkflowResponse409 | CreateWorkflowResponse500 | Workflow]
     """
 
     kwargs = _get_kwargs(
@@ -228,19 +220,18 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowCreate,
-) -> Optional[
-    Union[
-        CreateWorkflowResponse400,
-        CreateWorkflowResponse401,
-        CreateWorkflowResponse403,
-        CreateWorkflowResponse404,
-        CreateWorkflowResponse409,
-        CreateWorkflowResponse500,
-        Workflow,
-    ]
-]:
+) -> (
+    CreateWorkflowResponse400
+    | CreateWorkflowResponse401
+    | CreateWorkflowResponse403
+    | CreateWorkflowResponse404
+    | CreateWorkflowResponse409
+    | CreateWorkflowResponse500
+    | Workflow
+    | None
+):
     """Create workflow
 
      Creates a new record of type Workflow.
@@ -253,7 +244,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[CreateWorkflowResponse400, CreateWorkflowResponse401, CreateWorkflowResponse403, CreateWorkflowResponse404, CreateWorkflowResponse409, CreateWorkflowResponse500, Workflow]
+        CreateWorkflowResponse400 | CreateWorkflowResponse401 | CreateWorkflowResponse403 | CreateWorkflowResponse404 | CreateWorkflowResponse409 | CreateWorkflowResponse500 | Workflow
     """
 
     return (

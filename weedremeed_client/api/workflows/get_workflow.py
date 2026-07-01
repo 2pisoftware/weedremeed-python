@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -17,26 +18,28 @@ from ...types import Response
 def _get_kwargs(
     workflow_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/weedremeed-api/workflow/{workflow_id}",
+        "url": "/weedremeed-api/workflow/{workflow_id}".format(
+            workflow_id=quote(str(workflow_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        GetWorkflowResponse400,
-        GetWorkflowResponse401,
-        GetWorkflowResponse403,
-        GetWorkflowResponse404,
-        GetWorkflowResponse500,
-        Workflow,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    GetWorkflowResponse400
+    | GetWorkflowResponse401
+    | GetWorkflowResponse403
+    | GetWorkflowResponse404
+    | GetWorkflowResponse500
+    | Workflow
+    | None
+):
     if response.status_code == 200:
         response_200 = Workflow.from_dict(response.json())
 
@@ -74,16 +77,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        GetWorkflowResponse400,
-        GetWorkflowResponse401,
-        GetWorkflowResponse403,
-        GetWorkflowResponse404,
-        GetWorkflowResponse500,
-        Workflow,
-    ]
+    GetWorkflowResponse400
+    | GetWorkflowResponse401
+    | GetWorkflowResponse403
+    | GetWorkflowResponse404
+    | GetWorkflowResponse500
+    | Workflow
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -96,16 +97,14 @@ def _build_response(
 def sync_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        GetWorkflowResponse400,
-        GetWorkflowResponse401,
-        GetWorkflowResponse403,
-        GetWorkflowResponse404,
-        GetWorkflowResponse500,
-        Workflow,
-    ]
+    GetWorkflowResponse400
+    | GetWorkflowResponse401
+    | GetWorkflowResponse403
+    | GetWorkflowResponse404
+    | GetWorkflowResponse500
+    | Workflow
 ]:
     """Get workflow
 
@@ -119,7 +118,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetWorkflowResponse400, GetWorkflowResponse401, GetWorkflowResponse403, GetWorkflowResponse404, GetWorkflowResponse500, Workflow]]
+        Response[GetWorkflowResponse400 | GetWorkflowResponse401 | GetWorkflowResponse403 | GetWorkflowResponse404 | GetWorkflowResponse500 | Workflow]
     """
 
     kwargs = _get_kwargs(
@@ -136,17 +135,16 @@ def sync_detailed(
 def sync(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        GetWorkflowResponse400,
-        GetWorkflowResponse401,
-        GetWorkflowResponse403,
-        GetWorkflowResponse404,
-        GetWorkflowResponse500,
-        Workflow,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    GetWorkflowResponse400
+    | GetWorkflowResponse401
+    | GetWorkflowResponse403
+    | GetWorkflowResponse404
+    | GetWorkflowResponse500
+    | Workflow
+    | None
+):
     """Get workflow
 
      Returns a record of type Workflow.
@@ -159,7 +157,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetWorkflowResponse400, GetWorkflowResponse401, GetWorkflowResponse403, GetWorkflowResponse404, GetWorkflowResponse500, Workflow]
+        GetWorkflowResponse400 | GetWorkflowResponse401 | GetWorkflowResponse403 | GetWorkflowResponse404 | GetWorkflowResponse500 | Workflow
     """
 
     return sync_detailed(
@@ -171,16 +169,14 @@ def sync(
 async def asyncio_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        GetWorkflowResponse400,
-        GetWorkflowResponse401,
-        GetWorkflowResponse403,
-        GetWorkflowResponse404,
-        GetWorkflowResponse500,
-        Workflow,
-    ]
+    GetWorkflowResponse400
+    | GetWorkflowResponse401
+    | GetWorkflowResponse403
+    | GetWorkflowResponse404
+    | GetWorkflowResponse500
+    | Workflow
 ]:
     """Get workflow
 
@@ -194,7 +190,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetWorkflowResponse400, GetWorkflowResponse401, GetWorkflowResponse403, GetWorkflowResponse404, GetWorkflowResponse500, Workflow]]
+        Response[GetWorkflowResponse400 | GetWorkflowResponse401 | GetWorkflowResponse403 | GetWorkflowResponse404 | GetWorkflowResponse500 | Workflow]
     """
 
     kwargs = _get_kwargs(
@@ -209,17 +205,16 @@ async def asyncio_detailed(
 async def asyncio(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        GetWorkflowResponse400,
-        GetWorkflowResponse401,
-        GetWorkflowResponse403,
-        GetWorkflowResponse404,
-        GetWorkflowResponse500,
-        Workflow,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    GetWorkflowResponse400
+    | GetWorkflowResponse401
+    | GetWorkflowResponse403
+    | GetWorkflowResponse404
+    | GetWorkflowResponse500
+    | Workflow
+    | None
+):
     """Get workflow
 
      Returns a record of type Workflow.
@@ -232,7 +227,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetWorkflowResponse400, GetWorkflowResponse401, GetWorkflowResponse403, GetWorkflowResponse404, GetWorkflowResponse500, Workflow]
+        GetWorkflowResponse400 | GetWorkflowResponse401 | GetWorkflowResponse403 | GetWorkflowResponse404 | GetWorkflowResponse500 | Workflow
     """
 
     return (

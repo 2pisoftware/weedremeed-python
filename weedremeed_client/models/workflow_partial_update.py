@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,14 +20,14 @@ class WorkflowPartialUpdate:
     """Data transfer object for partially updating an existing Workflow (PATCH operation).
 
     Attributes:
-        title (Union[Unset, str]):
-        input_collection_id (Union[Unset, str]):
-        nodes (Union[Unset, list['WorkflowNode']]):
+        title (str | Unset):
+        input_collection_id (str | Unset):
+        nodes (list[WorkflowNode] | Unset):
     """
 
-    title: Union[Unset, str] = UNSET
-    input_collection_id: Union[Unset, str] = UNSET
-    nodes: Union[Unset, list["WorkflowNode"]] = UNSET
+    title: str | Unset = UNSET
+    input_collection_id: str | Unset = UNSET
+    nodes: list[WorkflowNode] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -33,7 +35,7 @@ class WorkflowPartialUpdate:
 
         input_collection_id = self.input_collection_id
 
-        nodes: Union[Unset, list[dict[str, Any]]] = UNSET
+        nodes: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.nodes, Unset):
             nodes = []
             for nodes_item_data in self.nodes:
@@ -61,12 +63,14 @@ class WorkflowPartialUpdate:
 
         input_collection_id = d.pop("input_collection_id", UNSET)
 
-        nodes = []
         _nodes = d.pop("nodes", UNSET)
-        for nodes_item_data in _nodes or []:
-            nodes_item = WorkflowNode.from_dict(nodes_item_data)
+        nodes: list[WorkflowNode] | Unset = UNSET
+        if _nodes is not UNSET:
+            nodes = []
+            for nodes_item_data in _nodes:
+                nodes_item = WorkflowNode.from_dict(nodes_item_data)
 
-            nodes.append(nodes_item)
+                nodes.append(nodes_item)
 
         workflow_partial_update = cls(
             title=title,

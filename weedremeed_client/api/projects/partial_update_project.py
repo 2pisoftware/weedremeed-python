@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -24,7 +25,9 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "patch",
-        "url": f"/weedremeed-api/project/{project_id}",
+        "url": "/weedremeed-api/project/{project_id}".format(
+            project_id=quote(str(project_id), safe=""),
+        ),
     }
 
     _kwargs["json"] = body.to_dict()
@@ -36,17 +39,16 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        PartialUpdateProjectResponse400,
-        PartialUpdateProjectResponse401,
-        PartialUpdateProjectResponse403,
-        PartialUpdateProjectResponse404,
-        PartialUpdateProjectResponse500,
-        Project,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    PartialUpdateProjectResponse400
+    | PartialUpdateProjectResponse401
+    | PartialUpdateProjectResponse403
+    | PartialUpdateProjectResponse404
+    | PartialUpdateProjectResponse500
+    | Project
+    | None
+):
     if response.status_code == 200:
         response_200 = Project.from_dict(response.json())
 
@@ -84,16 +86,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        PartialUpdateProjectResponse400,
-        PartialUpdateProjectResponse401,
-        PartialUpdateProjectResponse403,
-        PartialUpdateProjectResponse404,
-        PartialUpdateProjectResponse500,
-        Project,
-    ]
+    PartialUpdateProjectResponse400
+    | PartialUpdateProjectResponse401
+    | PartialUpdateProjectResponse403
+    | PartialUpdateProjectResponse404
+    | PartialUpdateProjectResponse500
+    | Project
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -106,17 +106,15 @@ def _build_response(
 def sync_detailed(
     project_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: ProjectPartialUpdate,
 ) -> Response[
-    Union[
-        PartialUpdateProjectResponse400,
-        PartialUpdateProjectResponse401,
-        PartialUpdateProjectResponse403,
-        PartialUpdateProjectResponse404,
-        PartialUpdateProjectResponse500,
-        Project,
-    ]
+    PartialUpdateProjectResponse400
+    | PartialUpdateProjectResponse401
+    | PartialUpdateProjectResponse403
+    | PartialUpdateProjectResponse404
+    | PartialUpdateProjectResponse500
+    | Project
 ]:
     """Patch project
 
@@ -132,7 +130,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[PartialUpdateProjectResponse400, PartialUpdateProjectResponse401, PartialUpdateProjectResponse403, PartialUpdateProjectResponse404, PartialUpdateProjectResponse500, Project]]
+        Response[PartialUpdateProjectResponse400 | PartialUpdateProjectResponse401 | PartialUpdateProjectResponse403 | PartialUpdateProjectResponse404 | PartialUpdateProjectResponse500 | Project]
     """
 
     kwargs = _get_kwargs(
@@ -150,18 +148,17 @@ def sync_detailed(
 def sync(
     project_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: ProjectPartialUpdate,
-) -> Optional[
-    Union[
-        PartialUpdateProjectResponse400,
-        PartialUpdateProjectResponse401,
-        PartialUpdateProjectResponse403,
-        PartialUpdateProjectResponse404,
-        PartialUpdateProjectResponse500,
-        Project,
-    ]
-]:
+) -> (
+    PartialUpdateProjectResponse400
+    | PartialUpdateProjectResponse401
+    | PartialUpdateProjectResponse403
+    | PartialUpdateProjectResponse404
+    | PartialUpdateProjectResponse500
+    | Project
+    | None
+):
     """Patch project
 
      Partially updates a record of type Project.
@@ -176,7 +173,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[PartialUpdateProjectResponse400, PartialUpdateProjectResponse401, PartialUpdateProjectResponse403, PartialUpdateProjectResponse404, PartialUpdateProjectResponse500, Project]
+        PartialUpdateProjectResponse400 | PartialUpdateProjectResponse401 | PartialUpdateProjectResponse403 | PartialUpdateProjectResponse404 | PartialUpdateProjectResponse500 | Project
     """
 
     return sync_detailed(
@@ -189,17 +186,15 @@ def sync(
 async def asyncio_detailed(
     project_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: ProjectPartialUpdate,
 ) -> Response[
-    Union[
-        PartialUpdateProjectResponse400,
-        PartialUpdateProjectResponse401,
-        PartialUpdateProjectResponse403,
-        PartialUpdateProjectResponse404,
-        PartialUpdateProjectResponse500,
-        Project,
-    ]
+    PartialUpdateProjectResponse400
+    | PartialUpdateProjectResponse401
+    | PartialUpdateProjectResponse403
+    | PartialUpdateProjectResponse404
+    | PartialUpdateProjectResponse500
+    | Project
 ]:
     """Patch project
 
@@ -215,7 +210,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[PartialUpdateProjectResponse400, PartialUpdateProjectResponse401, PartialUpdateProjectResponse403, PartialUpdateProjectResponse404, PartialUpdateProjectResponse500, Project]]
+        Response[PartialUpdateProjectResponse400 | PartialUpdateProjectResponse401 | PartialUpdateProjectResponse403 | PartialUpdateProjectResponse404 | PartialUpdateProjectResponse500 | Project]
     """
 
     kwargs = _get_kwargs(
@@ -231,18 +226,17 @@ async def asyncio_detailed(
 async def asyncio(
     project_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: ProjectPartialUpdate,
-) -> Optional[
-    Union[
-        PartialUpdateProjectResponse400,
-        PartialUpdateProjectResponse401,
-        PartialUpdateProjectResponse403,
-        PartialUpdateProjectResponse404,
-        PartialUpdateProjectResponse500,
-        Project,
-    ]
-]:
+) -> (
+    PartialUpdateProjectResponse400
+    | PartialUpdateProjectResponse401
+    | PartialUpdateProjectResponse403
+    | PartialUpdateProjectResponse404
+    | PartialUpdateProjectResponse500
+    | Project
+    | None
+):
     """Patch project
 
      Partially updates a record of type Project.
@@ -257,7 +251,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[PartialUpdateProjectResponse400, PartialUpdateProjectResponse401, PartialUpdateProjectResponse403, PartialUpdateProjectResponse404, PartialUpdateProjectResponse500, Project]
+        PartialUpdateProjectResponse400 | PartialUpdateProjectResponse401 | PartialUpdateProjectResponse403 | PartialUpdateProjectResponse404 | PartialUpdateProjectResponse500 | Project
     """
 
     return (

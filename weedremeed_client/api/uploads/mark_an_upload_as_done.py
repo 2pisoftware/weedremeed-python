@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,19 +15,20 @@ from ...types import Response
 def _get_kwargs(
     upload_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/file-multipart/ajax_done/{upload_id}",
+        "url": "/file-multipart/ajax_done/{upload_id}".format(
+            upload_id=quote(str(upload_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500 | None:
     if response.status_code == 200:
         response_200 = MarkAnUploadAsDoneMarkAnUploadAsDoneOk.from_dict(response.json())
 
@@ -49,10 +51,8 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[
-    Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -64,10 +64,8 @@ def _build_response(
 def sync_detailed(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Response[
-    Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
-]:
+    client: AuthenticatedClient | Client,
+) -> Response[MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500]:
     """Mark an upload as done
 
     Args:
@@ -78,7 +76,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]]
+        Response[MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -95,10 +93,8 @@ def sync_detailed(
 def sync(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
-]:
+    client: AuthenticatedClient | Client,
+) -> MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500 | None:
     """Mark an upload as done
 
     Args:
@@ -109,7 +105,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
+        MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500
     """
 
     return sync_detailed(
@@ -121,10 +117,8 @@ def sync(
 async def asyncio_detailed(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Response[
-    Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
-]:
+    client: AuthenticatedClient | Client,
+) -> Response[MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500]:
     """Mark an upload as done
 
     Args:
@@ -135,7 +129,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]]
+        Response[MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -150,10 +144,8 @@ async def asyncio_detailed(
 async def asyncio(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
-]:
+    client: AuthenticatedClient | Client,
+) -> MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500 | None:
     """Mark an upload as done
 
     Args:
@@ -164,7 +156,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[MarkAnUploadAsDoneMarkAnUploadAsDoneOk, MarkAnUploadAsDoneResponse400, MarkAnUploadAsDoneResponse500]
+        MarkAnUploadAsDoneMarkAnUploadAsDoneOk | MarkAnUploadAsDoneResponse400 | MarkAnUploadAsDoneResponse500
     """
 
     return (

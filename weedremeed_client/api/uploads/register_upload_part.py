@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -32,10 +32,8 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500 | None:
     if response.status_code == 200:
         response_200 = RegisterUploadPartRegisterUploadPartOk.from_dict(response.json())
 
@@ -58,10 +56,8 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[
-    Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -72,11 +68,9 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: RegisterUploadPartBody,
-) -> Response[
-    Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
-]:
+) -> Response[RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500]:
     """Register upload part
 
      Register a multipart upload part
@@ -89,7 +83,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]]
+        Response[RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -105,11 +99,9 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: RegisterUploadPartBody,
-) -> Optional[
-    Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
-]:
+) -> RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500 | None:
     """Register upload part
 
      Register a multipart upload part
@@ -122,7 +114,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
+        RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500
     """
 
     return sync_detailed(
@@ -133,11 +125,9 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: RegisterUploadPartBody,
-) -> Response[
-    Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
-]:
+) -> Response[RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500]:
     """Register upload part
 
      Register a multipart upload part
@@ -150,7 +140,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]]
+        Response[RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -164,11 +154,9 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: RegisterUploadPartBody,
-) -> Optional[
-    Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
-]:
+) -> RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500 | None:
     """Register upload part
 
      Register a multipart upload part
@@ -181,7 +169,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[RegisterUploadPartRegisterUploadPartOk, RegisterUploadPartResponse400, RegisterUploadPartResponse500]
+        RegisterUploadPartRegisterUploadPartOk | RegisterUploadPartResponse400 | RegisterUploadPartResponse500
     """
 
     return (

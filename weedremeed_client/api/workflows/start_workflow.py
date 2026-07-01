@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
@@ -16,26 +17,28 @@ from ...types import Response
 def _get_kwargs(
     workflow_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": f"/weedremeed-api/start/{workflow_id}",
+        "url": "/weedremeed-api/start/{workflow_id}".format(
+            workflow_id=quote(str(workflow_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        None,
-        StartWorkflowResponse400,
-        StartWorkflowResponse401,
-        StartWorkflowResponse403,
-        StartWorkflowResponse404,
-        StartWorkflowResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    None
+    | StartWorkflowResponse400
+    | StartWorkflowResponse401
+    | StartWorkflowResponse403
+    | StartWorkflowResponse404
+    | StartWorkflowResponse500
+    | None
+):
     if response.status_code == 204:
         response_204 = cast(None, response.json())
         return response_204
@@ -72,16 +75,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        None,
-        StartWorkflowResponse400,
-        StartWorkflowResponse401,
-        StartWorkflowResponse403,
-        StartWorkflowResponse404,
-        StartWorkflowResponse500,
-    ]
+    None
+    | StartWorkflowResponse400
+    | StartWorkflowResponse401
+    | StartWorkflowResponse403
+    | StartWorkflowResponse404
+    | StartWorkflowResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -94,16 +95,14 @@ def _build_response(
 def sync_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        StartWorkflowResponse400,
-        StartWorkflowResponse401,
-        StartWorkflowResponse403,
-        StartWorkflowResponse404,
-        StartWorkflowResponse500,
-    ]
+    None
+    | StartWorkflowResponse400
+    | StartWorkflowResponse401
+    | StartWorkflowResponse403
+    | StartWorkflowResponse404
+    | StartWorkflowResponse500
 ]:
     """Start workflow
 
@@ -115,7 +114,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, StartWorkflowResponse400, StartWorkflowResponse401, StartWorkflowResponse403, StartWorkflowResponse404, StartWorkflowResponse500]]
+        Response[None | StartWorkflowResponse400 | StartWorkflowResponse401 | StartWorkflowResponse403 | StartWorkflowResponse404 | StartWorkflowResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -132,17 +131,16 @@ def sync_detailed(
 def sync(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        StartWorkflowResponse400,
-        StartWorkflowResponse401,
-        StartWorkflowResponse403,
-        StartWorkflowResponse404,
-        StartWorkflowResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | StartWorkflowResponse400
+    | StartWorkflowResponse401
+    | StartWorkflowResponse403
+    | StartWorkflowResponse404
+    | StartWorkflowResponse500
+    | None
+):
     """Start workflow
 
     Args:
@@ -153,7 +151,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, StartWorkflowResponse400, StartWorkflowResponse401, StartWorkflowResponse403, StartWorkflowResponse404, StartWorkflowResponse500]
+        None | StartWorkflowResponse400 | StartWorkflowResponse401 | StartWorkflowResponse403 | StartWorkflowResponse404 | StartWorkflowResponse500
     """
 
     return sync_detailed(
@@ -165,16 +163,14 @@ def sync(
 async def asyncio_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        StartWorkflowResponse400,
-        StartWorkflowResponse401,
-        StartWorkflowResponse403,
-        StartWorkflowResponse404,
-        StartWorkflowResponse500,
-    ]
+    None
+    | StartWorkflowResponse400
+    | StartWorkflowResponse401
+    | StartWorkflowResponse403
+    | StartWorkflowResponse404
+    | StartWorkflowResponse500
 ]:
     """Start workflow
 
@@ -186,7 +182,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, StartWorkflowResponse400, StartWorkflowResponse401, StartWorkflowResponse403, StartWorkflowResponse404, StartWorkflowResponse500]]
+        Response[None | StartWorkflowResponse400 | StartWorkflowResponse401 | StartWorkflowResponse403 | StartWorkflowResponse404 | StartWorkflowResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -201,17 +197,16 @@ async def asyncio_detailed(
 async def asyncio(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        StartWorkflowResponse400,
-        StartWorkflowResponse401,
-        StartWorkflowResponse403,
-        StartWorkflowResponse404,
-        StartWorkflowResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | StartWorkflowResponse400
+    | StartWorkflowResponse401
+    | StartWorkflowResponse403
+    | StartWorkflowResponse404
+    | StartWorkflowResponse500
+    | None
+):
     """Start workflow
 
     Args:
@@ -222,7 +217,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, StartWorkflowResponse400, StartWorkflowResponse401, StartWorkflowResponse403, StartWorkflowResponse404, StartWorkflowResponse500]
+        None | StartWorkflowResponse400 | StartWorkflowResponse401 | StartWorkflowResponse403 | StartWorkflowResponse404 | StartWorkflowResponse500
     """
 
     return (

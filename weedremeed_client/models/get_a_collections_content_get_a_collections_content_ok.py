@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -16,11 +18,11 @@ T = TypeVar("T", bound="GetACollectionsContentGetACollectionsContentOk")
 class GetACollectionsContentGetACollectionsContentOk:
     """
     Attributes:
-        files (list[Union['Attachment', 'RemoteAttachment']]):
+        files (list[Attachment | RemoteAttachment]):
         next_ (str): Cursor for next request
     """
 
-    files: list[Union["Attachment", "RemoteAttachment"]]
+    files: list[Attachment | RemoteAttachment]
     next_: str
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
@@ -60,14 +62,14 @@ class GetACollectionsContentGetACollectionsContentOk:
         _files = d.pop("files")
         for files_item_data in _files:
 
-            def _parse_files_item(data: object) -> Union["Attachment", "RemoteAttachment"]:
+            def _parse_files_item(data: object) -> Attachment | RemoteAttachment:
                 try:
                     if not isinstance(data, dict):
                         raise TypeError()
                     files_item_type_0 = RemoteAttachment.from_dict(data)
 
                     return files_item_type_0
-                except:  # noqa: E722
+                except (TypeError, ValueError, AttributeError, KeyError):
                     pass
                 if not isinstance(data, dict):
                     raise TypeError()

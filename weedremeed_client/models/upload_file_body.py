@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
@@ -18,7 +20,7 @@ class UploadFileBody:
     """
 
     filename: str
-	md5: str
+    md5: str
     mime: str
     size: float
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)

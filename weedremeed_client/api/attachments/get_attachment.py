@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -17,26 +18,28 @@ from ...types import Response
 def _get_kwargs(
     attachment_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/weedremeed-api/attachment/{attachment_id}",
+        "url": "/weedremeed-api/attachment/{attachment_id}".format(
+            attachment_id=quote(str(attachment_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        Attachment,
-        GetAttachmentResponse400,
-        GetAttachmentResponse401,
-        GetAttachmentResponse403,
-        GetAttachmentResponse404,
-        GetAttachmentResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    Attachment
+    | GetAttachmentResponse400
+    | GetAttachmentResponse401
+    | GetAttachmentResponse403
+    | GetAttachmentResponse404
+    | GetAttachmentResponse500
+    | None
+):
     if response.status_code == 200:
         response_200 = Attachment.from_dict(response.json())
 
@@ -74,16 +77,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        Attachment,
-        GetAttachmentResponse400,
-        GetAttachmentResponse401,
-        GetAttachmentResponse403,
-        GetAttachmentResponse404,
-        GetAttachmentResponse500,
-    ]
+    Attachment
+    | GetAttachmentResponse400
+    | GetAttachmentResponse401
+    | GetAttachmentResponse403
+    | GetAttachmentResponse404
+    | GetAttachmentResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -96,16 +97,14 @@ def _build_response(
 def sync_detailed(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        Attachment,
-        GetAttachmentResponse400,
-        GetAttachmentResponse401,
-        GetAttachmentResponse403,
-        GetAttachmentResponse404,
-        GetAttachmentResponse500,
-    ]
+    Attachment
+    | GetAttachmentResponse400
+    | GetAttachmentResponse401
+    | GetAttachmentResponse403
+    | GetAttachmentResponse404
+    | GetAttachmentResponse500
 ]:
     """Get attachment
 
@@ -120,7 +119,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Attachment, GetAttachmentResponse400, GetAttachmentResponse401, GetAttachmentResponse403, GetAttachmentResponse404, GetAttachmentResponse500]]
+        Response[Attachment | GetAttachmentResponse400 | GetAttachmentResponse401 | GetAttachmentResponse403 | GetAttachmentResponse404 | GetAttachmentResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -137,17 +136,16 @@ def sync_detailed(
 def sync(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        Attachment,
-        GetAttachmentResponse400,
-        GetAttachmentResponse401,
-        GetAttachmentResponse403,
-        GetAttachmentResponse404,
-        GetAttachmentResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    Attachment
+    | GetAttachmentResponse400
+    | GetAttachmentResponse401
+    | GetAttachmentResponse403
+    | GetAttachmentResponse404
+    | GetAttachmentResponse500
+    | None
+):
     """Get attachment
 
      Returns an Attachment. You may only fetch user-uploaded attachments via this endpoint. For tool
@@ -161,7 +159,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Attachment, GetAttachmentResponse400, GetAttachmentResponse401, GetAttachmentResponse403, GetAttachmentResponse404, GetAttachmentResponse500]
+        Attachment | GetAttachmentResponse400 | GetAttachmentResponse401 | GetAttachmentResponse403 | GetAttachmentResponse404 | GetAttachmentResponse500
     """
 
     return sync_detailed(
@@ -173,16 +171,14 @@ def sync(
 async def asyncio_detailed(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        Attachment,
-        GetAttachmentResponse400,
-        GetAttachmentResponse401,
-        GetAttachmentResponse403,
-        GetAttachmentResponse404,
-        GetAttachmentResponse500,
-    ]
+    Attachment
+    | GetAttachmentResponse400
+    | GetAttachmentResponse401
+    | GetAttachmentResponse403
+    | GetAttachmentResponse404
+    | GetAttachmentResponse500
 ]:
     """Get attachment
 
@@ -197,7 +193,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Attachment, GetAttachmentResponse400, GetAttachmentResponse401, GetAttachmentResponse403, GetAttachmentResponse404, GetAttachmentResponse500]]
+        Response[Attachment | GetAttachmentResponse400 | GetAttachmentResponse401 | GetAttachmentResponse403 | GetAttachmentResponse404 | GetAttachmentResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -212,17 +208,16 @@ async def asyncio_detailed(
 async def asyncio(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        Attachment,
-        GetAttachmentResponse400,
-        GetAttachmentResponse401,
-        GetAttachmentResponse403,
-        GetAttachmentResponse404,
-        GetAttachmentResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    Attachment
+    | GetAttachmentResponse400
+    | GetAttachmentResponse401
+    | GetAttachmentResponse403
+    | GetAttachmentResponse404
+    | GetAttachmentResponse500
+    | None
+):
     """Get attachment
 
      Returns an Attachment. You may only fetch user-uploaded attachments via this endpoint. For tool
@@ -236,7 +231,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Attachment, GetAttachmentResponse400, GetAttachmentResponse401, GetAttachmentResponse403, GetAttachmentResponse404, GetAttachmentResponse500]
+        Attachment | GetAttachmentResponse400 | GetAttachmentResponse401 | GetAttachmentResponse403 | GetAttachmentResponse404 | GetAttachmentResponse500
     """
 
     return (

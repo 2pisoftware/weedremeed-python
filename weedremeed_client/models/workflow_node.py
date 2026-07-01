@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,27 +27,27 @@ class WorkflowNode:
     """A node within a workflow. In the UI, this is a 'tool'
 
     Attributes:
-        config (Union['ArchiverTool', 'CollectionBindTool', 'ColourPickerTool', 'GeoJsonTool', 'PresetPickerTool',
-            'RandomSamplerTool', 'YOLOv5Tool', None]):
+        config (ArchiverTool | CollectionBindTool | ColourPickerTool | GeoJsonTool | None | PresetPickerTool |
+            RandomSamplerTool | YOLOv5Tool):
         export (bool): When true, this node will export it's output to a separate collection in addition to the normal
             workflow output collection.
         name (WorkflowNodeName):
-        output_collection_id (Union[Unset, str]): Null when output is not ready yet, or `export` is false.
+        output_collection_id (str | Unset): Null when output is not ready yet, or `export` is false.
     """
 
-    config: Union[
-        "ArchiverTool",
-        "CollectionBindTool",
-        "ColourPickerTool",
-        "GeoJsonTool",
-        "PresetPickerTool",
-        "RandomSamplerTool",
-        "YOLOv5Tool",
-        None,
-    ]
+    config: (
+        ArchiverTool
+        | CollectionBindTool
+        | ColourPickerTool
+        | GeoJsonTool
+        | None
+        | PresetPickerTool
+        | RandomSamplerTool
+        | YOLOv5Tool
+    )
     export: bool
     name: WorkflowNodeName
-    output_collection_id: Union[Unset, str] = UNSET
+    output_collection_id: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -57,7 +59,7 @@ class WorkflowNode:
         from ..models.random_sampler_tool import RandomSamplerTool
         from ..models.yol_ov_5_tool import YOLOv5Tool
 
-        config: Union[None, dict[str, Any]]
+        config: dict[str, Any] | None
         if isinstance(self.config, ColourPickerTool):
             config = self.config.to_dict()
         elif isinstance(self.config, ArchiverTool):
@@ -109,16 +111,16 @@ class WorkflowNode:
 
         def _parse_config(
             data: object,
-        ) -> Union[
-            "ArchiverTool",
-            "CollectionBindTool",
-            "ColourPickerTool",
-            "GeoJsonTool",
-            "PresetPickerTool",
-            "RandomSamplerTool",
-            "YOLOv5Tool",
-            None,
-        ]:
+        ) -> (
+            ArchiverTool
+            | CollectionBindTool
+            | ColourPickerTool
+            | GeoJsonTool
+            | None
+            | PresetPickerTool
+            | RandomSamplerTool
+            | YOLOv5Tool
+        ):
             if data is None:
                 return data
             try:
@@ -127,7 +129,7 @@ class WorkflowNode:
                 config_type_0 = ColourPickerTool.from_dict(data)
 
                 return config_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             try:
                 if not isinstance(data, dict):
@@ -135,7 +137,7 @@ class WorkflowNode:
                 config_type_1 = ArchiverTool.from_dict(data)
 
                 return config_type_1
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             try:
                 if not isinstance(data, dict):
@@ -143,7 +145,7 @@ class WorkflowNode:
                 config_type_3 = GeoJsonTool.from_dict(data)
 
                 return config_type_3
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             try:
                 if not isinstance(data, dict):
@@ -151,7 +153,7 @@ class WorkflowNode:
                 config_type_4 = RandomSamplerTool.from_dict(data)
 
                 return config_type_4
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             try:
                 if not isinstance(data, dict):
@@ -159,7 +161,7 @@ class WorkflowNode:
                 config_type_5 = CollectionBindTool.from_dict(data)
 
                 return config_type_5
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             try:
                 if not isinstance(data, dict):
@@ -167,7 +169,7 @@ class WorkflowNode:
                 config_type_6 = PresetPickerTool.from_dict(data)
 
                 return config_type_6
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             try:
                 if not isinstance(data, dict):
@@ -175,19 +177,17 @@ class WorkflowNode:
                 config_type_7 = YOLOv5Tool.from_dict(data)
 
                 return config_type_7
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
             return cast(
-                Union[
-                    "ArchiverTool",
-                    "CollectionBindTool",
-                    "ColourPickerTool",
-                    "GeoJsonTool",
-                    "PresetPickerTool",
-                    "RandomSamplerTool",
-                    "YOLOv5Tool",
-                    None,
-                ],
+                ArchiverTool
+                | CollectionBindTool
+                | ColourPickerTool
+                | GeoJsonTool
+                | None
+                | PresetPickerTool
+                | RandomSamplerTool
+                | YOLOv5Tool,
                 data,
             )
 

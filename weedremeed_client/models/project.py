@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,21 +22,21 @@ class Project:
     Attributes:
         title (str):
         dt_created (str):
-        collections (list['Collection']):
+        collections (list[Collection]):
         id (str):
         project_group_id (str):
-        description (Union[Unset, str]):
-        swatch_collection_id (Union[Unset, str]): The ID of the collection that holds swatches used for colour picker
-            tools in workflows.
+        description (str | Unset):
+        swatch_collection_id (str | Unset): The ID of the collection that holds swatches used for colour picker tools in
+            workflows.
     """
 
     title: str
     dt_created: str
-    collections: list["Collection"]
+    collections: list[Collection]
     id: str
     project_group_id: str
-    description: Union[Unset, str] = UNSET
-    swatch_collection_id: Union[Unset, str] = UNSET
+    description: str | Unset = UNSET
+    swatch_collection_id: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

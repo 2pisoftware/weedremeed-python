@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
@@ -13,17 +14,20 @@ from ...types import Response
 def _get_kwargs(
     upload_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": f"/file-multipart/ajax_multipart/{upload_id}",
+        "url": "/file-multipart/ajax_multipart/{upload_id}".format(
+            upload_id=quote(str(upload_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None | None:
     if response.status_code == 200:
         response_200 = cast(None, response.json())
         return response_200
@@ -45,8 +49,8 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -58,8 +62,8 @@ def _build_response(
 def sync_detailed(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Response[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]:
+    client: AuthenticatedClient | Client,
+) -> Response[DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None]:
     """Abort a multipart upload
 
      Abort a multipart upload
@@ -72,7 +76,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]
+        Response[DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None]
     """
 
     kwargs = _get_kwargs(
@@ -89,8 +93,8 @@ def sync_detailed(
 def sync(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]:
+    client: AuthenticatedClient | Client,
+) -> DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None | None:
     """Abort a multipart upload
 
      Abort a multipart upload
@@ -103,7 +107,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]
+        DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None
     """
 
     return sync_detailed(
@@ -115,8 +119,8 @@ def sync(
 async def asyncio_detailed(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Response[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]:
+    client: AuthenticatedClient | Client,
+) -> Response[DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None]:
     """Abort a multipart upload
 
      Abort a multipart upload
@@ -129,7 +133,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]
+        Response[DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None]
     """
 
     kwargs = _get_kwargs(
@@ -144,8 +148,8 @@ async def asyncio_detailed(
 async def asyncio(
     upload_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]]:
+    client: AuthenticatedClient | Client,
+) -> DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None | None:
     """Abort a multipart upload
 
      Abort a multipart upload
@@ -158,7 +162,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[DeleteAjaxMultipartResponse400, DeleteAjaxMultipartResponse500, None]
+        DeleteAjaxMultipartResponse400 | DeleteAjaxMultipartResponse500 | None
     """
 
     return (
