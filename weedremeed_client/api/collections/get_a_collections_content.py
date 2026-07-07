@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -16,8 +17,9 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     collection_id: str,
     *,
-    cursor: Union[Unset, str] = UNSET,
+    cursor: str | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["cursor"] = cursor
@@ -26,7 +28,9 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/weedremeed-api/content/{collection_id}",
+        "url": "/weedremeed-api/content/{collection_id}".format(
+            collection_id=quote(str(collection_id), safe=""),
+        ),
         "params": params,
     }
 
@@ -34,14 +38,13 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        GetACollectionsContentGetACollectionsContentOk,
-        GetACollectionsContentResponse400,
-        GetACollectionsContentResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    GetACollectionsContentGetACollectionsContentOk
+    | GetACollectionsContentResponse400
+    | GetACollectionsContentResponse500
+    | None
+):
     if response.status_code == 200:
         response_200 = GetACollectionsContentGetACollectionsContentOk.from_dict(response.json())
 
@@ -64,13 +67,11 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        GetACollectionsContentGetACollectionsContentOk,
-        GetACollectionsContentResponse400,
-        GetACollectionsContentResponse500,
-    ]
+    GetACollectionsContentGetACollectionsContentOk
+    | GetACollectionsContentResponse400
+    | GetACollectionsContentResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -83,14 +84,12 @@ def _build_response(
 def sync_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-    cursor: Union[Unset, str] = UNSET,
+    client: AuthenticatedClient | Client,
+    cursor: str | Unset = UNSET,
 ) -> Response[
-    Union[
-        GetACollectionsContentGetACollectionsContentOk,
-        GetACollectionsContentResponse400,
-        GetACollectionsContentResponse500,
-    ]
+    GetACollectionsContentGetACollectionsContentOk
+    | GetACollectionsContentResponse400
+    | GetACollectionsContentResponse500
 ]:
     """Get a collections content
 
@@ -98,14 +97,14 @@ def sync_detailed(
 
     Args:
         collection_id (str):
-        cursor (Union[Unset, str]):
+        cursor (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetACollectionsContentGetACollectionsContentOk, GetACollectionsContentResponse400, GetACollectionsContentResponse500]]
+        Response[GetACollectionsContentGetACollectionsContentOk | GetACollectionsContentResponse400 | GetACollectionsContentResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -123,29 +122,28 @@ def sync_detailed(
 def sync(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-    cursor: Union[Unset, str] = UNSET,
-) -> Optional[
-    Union[
-        GetACollectionsContentGetACollectionsContentOk,
-        GetACollectionsContentResponse400,
-        GetACollectionsContentResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+    cursor: str | Unset = UNSET,
+) -> (
+    GetACollectionsContentGetACollectionsContentOk
+    | GetACollectionsContentResponse400
+    | GetACollectionsContentResponse500
+    | None
+):
     """Get a collections content
 
      Paginate through a collections content
 
     Args:
         collection_id (str):
-        cursor (Union[Unset, str]):
+        cursor (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetACollectionsContentGetACollectionsContentOk, GetACollectionsContentResponse400, GetACollectionsContentResponse500]
+        GetACollectionsContentGetACollectionsContentOk | GetACollectionsContentResponse400 | GetACollectionsContentResponse500
     """
 
     return sync_detailed(
@@ -158,14 +156,12 @@ def sync(
 async def asyncio_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-    cursor: Union[Unset, str] = UNSET,
+    client: AuthenticatedClient | Client,
+    cursor: str | Unset = UNSET,
 ) -> Response[
-    Union[
-        GetACollectionsContentGetACollectionsContentOk,
-        GetACollectionsContentResponse400,
-        GetACollectionsContentResponse500,
-    ]
+    GetACollectionsContentGetACollectionsContentOk
+    | GetACollectionsContentResponse400
+    | GetACollectionsContentResponse500
 ]:
     """Get a collections content
 
@@ -173,14 +169,14 @@ async def asyncio_detailed(
 
     Args:
         collection_id (str):
-        cursor (Union[Unset, str]):
+        cursor (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetACollectionsContentGetACollectionsContentOk, GetACollectionsContentResponse400, GetACollectionsContentResponse500]]
+        Response[GetACollectionsContentGetACollectionsContentOk | GetACollectionsContentResponse400 | GetACollectionsContentResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -196,29 +192,28 @@ async def asyncio_detailed(
 async def asyncio(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-    cursor: Union[Unset, str] = UNSET,
-) -> Optional[
-    Union[
-        GetACollectionsContentGetACollectionsContentOk,
-        GetACollectionsContentResponse400,
-        GetACollectionsContentResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+    cursor: str | Unset = UNSET,
+) -> (
+    GetACollectionsContentGetACollectionsContentOk
+    | GetACollectionsContentResponse400
+    | GetACollectionsContentResponse500
+    | None
+):
     """Get a collections content
 
      Paginate through a collections content
 
     Args:
         collection_id (str):
-        cursor (Union[Unset, str]):
+        cursor (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetACollectionsContentGetACollectionsContentOk, GetACollectionsContentResponse400, GetACollectionsContentResponse500]
+        GetACollectionsContentGetACollectionsContentOk | GetACollectionsContentResponse400 | GetACollectionsContentResponse500
     """
 
     return (

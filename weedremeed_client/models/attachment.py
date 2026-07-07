@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -18,14 +20,14 @@ class Attachment:
         dt_created (str):
         filename (str):
         url (str): A presigned URL to access this attachment. Expires in 1 hour
-        dt_modified (Union[Unset, str]):
+        dt_modified (str | Unset):
     """
 
     id: str
     dt_created: str
     filename: str
     url: str
-    dt_modified: Union[Unset, str] = UNSET
+    dt_modified: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

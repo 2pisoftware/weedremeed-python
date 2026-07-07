@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -24,7 +25,9 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "patch",
-        "url": f"/weedremeed-api/collection/{collection_id}",
+        "url": "/weedremeed-api/collection/{collection_id}".format(
+            collection_id=quote(str(collection_id), safe=""),
+        ),
     }
 
     _kwargs["json"] = body.to_dict()
@@ -36,17 +39,16 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        Collection,
-        PartialUpdateCollectionResponse400,
-        PartialUpdateCollectionResponse401,
-        PartialUpdateCollectionResponse403,
-        PartialUpdateCollectionResponse404,
-        PartialUpdateCollectionResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    Collection
+    | PartialUpdateCollectionResponse400
+    | PartialUpdateCollectionResponse401
+    | PartialUpdateCollectionResponse403
+    | PartialUpdateCollectionResponse404
+    | PartialUpdateCollectionResponse500
+    | None
+):
     if response.status_code == 200:
         response_200 = Collection.from_dict(response.json())
 
@@ -84,16 +86,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        Collection,
-        PartialUpdateCollectionResponse400,
-        PartialUpdateCollectionResponse401,
-        PartialUpdateCollectionResponse403,
-        PartialUpdateCollectionResponse404,
-        PartialUpdateCollectionResponse500,
-    ]
+    Collection
+    | PartialUpdateCollectionResponse400
+    | PartialUpdateCollectionResponse401
+    | PartialUpdateCollectionResponse403
+    | PartialUpdateCollectionResponse404
+    | PartialUpdateCollectionResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -106,17 +106,15 @@ def _build_response(
 def sync_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: CollectionPartialUpdate,
 ) -> Response[
-    Union[
-        Collection,
-        PartialUpdateCollectionResponse400,
-        PartialUpdateCollectionResponse401,
-        PartialUpdateCollectionResponse403,
-        PartialUpdateCollectionResponse404,
-        PartialUpdateCollectionResponse500,
-    ]
+    Collection
+    | PartialUpdateCollectionResponse400
+    | PartialUpdateCollectionResponse401
+    | PartialUpdateCollectionResponse403
+    | PartialUpdateCollectionResponse404
+    | PartialUpdateCollectionResponse500
 ]:
     """Patch collection
 
@@ -131,7 +129,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Collection, PartialUpdateCollectionResponse400, PartialUpdateCollectionResponse401, PartialUpdateCollectionResponse403, PartialUpdateCollectionResponse404, PartialUpdateCollectionResponse500]]
+        Response[Collection | PartialUpdateCollectionResponse400 | PartialUpdateCollectionResponse401 | PartialUpdateCollectionResponse403 | PartialUpdateCollectionResponse404 | PartialUpdateCollectionResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -149,18 +147,17 @@ def sync_detailed(
 def sync(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: CollectionPartialUpdate,
-) -> Optional[
-    Union[
-        Collection,
-        PartialUpdateCollectionResponse400,
-        PartialUpdateCollectionResponse401,
-        PartialUpdateCollectionResponse403,
-        PartialUpdateCollectionResponse404,
-        PartialUpdateCollectionResponse500,
-    ]
-]:
+) -> (
+    Collection
+    | PartialUpdateCollectionResponse400
+    | PartialUpdateCollectionResponse401
+    | PartialUpdateCollectionResponse403
+    | PartialUpdateCollectionResponse404
+    | PartialUpdateCollectionResponse500
+    | None
+):
     """Patch collection
 
      Partially updates a record of type Collection.
@@ -174,7 +171,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Collection, PartialUpdateCollectionResponse400, PartialUpdateCollectionResponse401, PartialUpdateCollectionResponse403, PartialUpdateCollectionResponse404, PartialUpdateCollectionResponse500]
+        Collection | PartialUpdateCollectionResponse400 | PartialUpdateCollectionResponse401 | PartialUpdateCollectionResponse403 | PartialUpdateCollectionResponse404 | PartialUpdateCollectionResponse500
     """
 
     return sync_detailed(
@@ -187,17 +184,15 @@ def sync(
 async def asyncio_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: CollectionPartialUpdate,
 ) -> Response[
-    Union[
-        Collection,
-        PartialUpdateCollectionResponse400,
-        PartialUpdateCollectionResponse401,
-        PartialUpdateCollectionResponse403,
-        PartialUpdateCollectionResponse404,
-        PartialUpdateCollectionResponse500,
-    ]
+    Collection
+    | PartialUpdateCollectionResponse400
+    | PartialUpdateCollectionResponse401
+    | PartialUpdateCollectionResponse403
+    | PartialUpdateCollectionResponse404
+    | PartialUpdateCollectionResponse500
 ]:
     """Patch collection
 
@@ -212,7 +207,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[Collection, PartialUpdateCollectionResponse400, PartialUpdateCollectionResponse401, PartialUpdateCollectionResponse403, PartialUpdateCollectionResponse404, PartialUpdateCollectionResponse500]]
+        Response[Collection | PartialUpdateCollectionResponse400 | PartialUpdateCollectionResponse401 | PartialUpdateCollectionResponse403 | PartialUpdateCollectionResponse404 | PartialUpdateCollectionResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -228,18 +223,17 @@ async def asyncio_detailed(
 async def asyncio(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: CollectionPartialUpdate,
-) -> Optional[
-    Union[
-        Collection,
-        PartialUpdateCollectionResponse400,
-        PartialUpdateCollectionResponse401,
-        PartialUpdateCollectionResponse403,
-        PartialUpdateCollectionResponse404,
-        PartialUpdateCollectionResponse500,
-    ]
-]:
+) -> (
+    Collection
+    | PartialUpdateCollectionResponse400
+    | PartialUpdateCollectionResponse401
+    | PartialUpdateCollectionResponse403
+    | PartialUpdateCollectionResponse404
+    | PartialUpdateCollectionResponse500
+    | None
+):
     """Patch collection
 
      Partially updates a record of type Collection.
@@ -253,7 +247,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[Collection, PartialUpdateCollectionResponse400, PartialUpdateCollectionResponse401, PartialUpdateCollectionResponse403, PartialUpdateCollectionResponse404, PartialUpdateCollectionResponse500]
+        Collection | PartialUpdateCollectionResponse400 | PartialUpdateCollectionResponse401 | PartialUpdateCollectionResponse403 | PartialUpdateCollectionResponse404 | PartialUpdateCollectionResponse500
     """
 
     return (

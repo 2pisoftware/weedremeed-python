@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
@@ -16,26 +17,28 @@ from ...types import Response
 def _get_kwargs(
     attachment_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": f"/weedremeed-api/attachment/{attachment_id}",
+        "url": "/weedremeed-api/attachment/{attachment_id}".format(
+            attachment_id=quote(str(attachment_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        None,
-        RemoveAttachmentResponse400,
-        RemoveAttachmentResponse401,
-        RemoveAttachmentResponse403,
-        RemoveAttachmentResponse404,
-        RemoveAttachmentResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    None
+    | RemoveAttachmentResponse400
+    | RemoveAttachmentResponse401
+    | RemoveAttachmentResponse403
+    | RemoveAttachmentResponse404
+    | RemoveAttachmentResponse500
+    | None
+):
     if response.status_code == 204:
         response_204 = cast(None, response.json())
         return response_204
@@ -72,16 +75,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        None,
-        RemoveAttachmentResponse400,
-        RemoveAttachmentResponse401,
-        RemoveAttachmentResponse403,
-        RemoveAttachmentResponse404,
-        RemoveAttachmentResponse500,
-    ]
+    None
+    | RemoveAttachmentResponse400
+    | RemoveAttachmentResponse401
+    | RemoveAttachmentResponse403
+    | RemoveAttachmentResponse404
+    | RemoveAttachmentResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -94,16 +95,14 @@ def _build_response(
 def sync_detailed(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        RemoveAttachmentResponse400,
-        RemoveAttachmentResponse401,
-        RemoveAttachmentResponse403,
-        RemoveAttachmentResponse404,
-        RemoveAttachmentResponse500,
-    ]
+    None
+    | RemoveAttachmentResponse400
+    | RemoveAttachmentResponse401
+    | RemoveAttachmentResponse403
+    | RemoveAttachmentResponse404
+    | RemoveAttachmentResponse500
 ]:
     """Delete attachment
 
@@ -118,7 +117,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, RemoveAttachmentResponse400, RemoveAttachmentResponse401, RemoveAttachmentResponse403, RemoveAttachmentResponse404, RemoveAttachmentResponse500]]
+        Response[None | RemoveAttachmentResponse400 | RemoveAttachmentResponse401 | RemoveAttachmentResponse403 | RemoveAttachmentResponse404 | RemoveAttachmentResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -135,17 +134,16 @@ def sync_detailed(
 def sync(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        RemoveAttachmentResponse400,
-        RemoveAttachmentResponse401,
-        RemoveAttachmentResponse403,
-        RemoveAttachmentResponse404,
-        RemoveAttachmentResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | RemoveAttachmentResponse400
+    | RemoveAttachmentResponse401
+    | RemoveAttachmentResponse403
+    | RemoveAttachmentResponse404
+    | RemoveAttachmentResponse500
+    | None
+):
     """Delete attachment
 
      Delete an Attachment. You may only delete user-uploaded Attachments. For deleting tool output, you
@@ -159,7 +157,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, RemoveAttachmentResponse400, RemoveAttachmentResponse401, RemoveAttachmentResponse403, RemoveAttachmentResponse404, RemoveAttachmentResponse500]
+        None | RemoveAttachmentResponse400 | RemoveAttachmentResponse401 | RemoveAttachmentResponse403 | RemoveAttachmentResponse404 | RemoveAttachmentResponse500
     """
 
     return sync_detailed(
@@ -171,16 +169,14 @@ def sync(
 async def asyncio_detailed(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        RemoveAttachmentResponse400,
-        RemoveAttachmentResponse401,
-        RemoveAttachmentResponse403,
-        RemoveAttachmentResponse404,
-        RemoveAttachmentResponse500,
-    ]
+    None
+    | RemoveAttachmentResponse400
+    | RemoveAttachmentResponse401
+    | RemoveAttachmentResponse403
+    | RemoveAttachmentResponse404
+    | RemoveAttachmentResponse500
 ]:
     """Delete attachment
 
@@ -195,7 +191,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, RemoveAttachmentResponse400, RemoveAttachmentResponse401, RemoveAttachmentResponse403, RemoveAttachmentResponse404, RemoveAttachmentResponse500]]
+        Response[None | RemoveAttachmentResponse400 | RemoveAttachmentResponse401 | RemoveAttachmentResponse403 | RemoveAttachmentResponse404 | RemoveAttachmentResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -210,17 +206,16 @@ async def asyncio_detailed(
 async def asyncio(
     attachment_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        RemoveAttachmentResponse400,
-        RemoveAttachmentResponse401,
-        RemoveAttachmentResponse403,
-        RemoveAttachmentResponse404,
-        RemoveAttachmentResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | RemoveAttachmentResponse400
+    | RemoveAttachmentResponse401
+    | RemoveAttachmentResponse403
+    | RemoveAttachmentResponse404
+    | RemoveAttachmentResponse500
+    | None
+):
     """Delete attachment
 
      Delete an Attachment. You may only delete user-uploaded Attachments. For deleting tool output, you
@@ -234,7 +229,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, RemoveAttachmentResponse400, RemoveAttachmentResponse401, RemoveAttachmentResponse403, RemoveAttachmentResponse404, RemoveAttachmentResponse500]
+        None | RemoveAttachmentResponse400 | RemoveAttachmentResponse401 | RemoveAttachmentResponse403 | RemoveAttachmentResponse404 | RemoveAttachmentResponse500
     """
 
     return (

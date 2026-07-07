@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -19,24 +20,26 @@ from ...types import Response
 def _get_kwargs(
     collection_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/weedremeed-api/collection_workflows/{collection_id}",
+        "url": "/weedremeed-api/collection_workflows/{collection_id}".format(
+            collection_id=quote(str(collection_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden,
-        GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised,
-        GetWorkflowsInACollectionResponse404,
-        list["Workflow"],
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden
+    | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised
+    | GetWorkflowsInACollectionResponse404
+    | list[Workflow]
+    | None
+):
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -69,14 +72,12 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden,
-        GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised,
-        GetWorkflowsInACollectionResponse404,
-        list["Workflow"],
-    ]
+    GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden
+    | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised
+    | GetWorkflowsInACollectionResponse404
+    | list[Workflow]
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -89,14 +90,12 @@ def _build_response(
 def sync_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden,
-        GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised,
-        GetWorkflowsInACollectionResponse404,
-        list["Workflow"],
-    ]
+    GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden
+    | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised
+    | GetWorkflowsInACollectionResponse404
+    | list[Workflow]
 ]:
     """Get workflows in a collection
 
@@ -108,7 +107,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden, GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised, GetWorkflowsInACollectionResponse404, list['Workflow']]]
+        Response[GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised | GetWorkflowsInACollectionResponse404 | list[Workflow]]
     """
 
     kwargs = _get_kwargs(
@@ -125,15 +124,14 @@ def sync_detailed(
 def sync(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden,
-        GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised,
-        GetWorkflowsInACollectionResponse404,
-        list["Workflow"],
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden
+    | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised
+    | GetWorkflowsInACollectionResponse404
+    | list[Workflow]
+    | None
+):
     """Get workflows in a collection
 
     Args:
@@ -144,7 +142,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden, GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised, GetWorkflowsInACollectionResponse404, list['Workflow']]
+        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised | GetWorkflowsInACollectionResponse404 | list[Workflow]
     """
 
     return sync_detailed(
@@ -156,14 +154,12 @@ def sync(
 async def asyncio_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden,
-        GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised,
-        GetWorkflowsInACollectionResponse404,
-        list["Workflow"],
-    ]
+    GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden
+    | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised
+    | GetWorkflowsInACollectionResponse404
+    | list[Workflow]
 ]:
     """Get workflows in a collection
 
@@ -175,7 +171,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden, GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised, GetWorkflowsInACollectionResponse404, list['Workflow']]]
+        Response[GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised | GetWorkflowsInACollectionResponse404 | list[Workflow]]
     """
 
     kwargs = _get_kwargs(
@@ -190,15 +186,14 @@ async def asyncio_detailed(
 async def asyncio(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden,
-        GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised,
-        GetWorkflowsInACollectionResponse404,
-        list["Workflow"],
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden
+    | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised
+    | GetWorkflowsInACollectionResponse404
+    | list[Workflow]
+    | None
+):
     """Get workflows in a collection
 
     Args:
@@ -209,7 +204,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden, GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised, GetWorkflowsInACollectionResponse404, list['Workflow']]
+        GetWorkflowsInACollectionGetWorkflowsInACollectionForbidden | GetWorkflowsInACollectionGetWorkflowsInACollectionUnauthorised | GetWorkflowsInACollectionResponse404 | list[Workflow]
     """
 
     return (

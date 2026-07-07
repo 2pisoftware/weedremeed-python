@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
+from urllib.parse import quote
 
 import httpx
 
@@ -16,26 +17,28 @@ from ...types import Response
 def _get_kwargs(
     collection_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "delete",
-        "url": f"/weedremeed-api/collection/{collection_id}",
+        "url": "/weedremeed-api/collection/{collection_id}".format(
+            collection_id=quote(str(collection_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        None,
-        RemoveCollectionResponse400,
-        RemoveCollectionResponse401,
-        RemoveCollectionResponse403,
-        RemoveCollectionResponse404,
-        RemoveCollectionResponse500,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    None
+    | RemoveCollectionResponse400
+    | RemoveCollectionResponse401
+    | RemoveCollectionResponse403
+    | RemoveCollectionResponse404
+    | RemoveCollectionResponse500
+    | None
+):
     if response.status_code == 204:
         response_204 = cast(None, response.json())
         return response_204
@@ -72,16 +75,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        None,
-        RemoveCollectionResponse400,
-        RemoveCollectionResponse401,
-        RemoveCollectionResponse403,
-        RemoveCollectionResponse404,
-        RemoveCollectionResponse500,
-    ]
+    None
+    | RemoveCollectionResponse400
+    | RemoveCollectionResponse401
+    | RemoveCollectionResponse403
+    | RemoveCollectionResponse404
+    | RemoveCollectionResponse500
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -94,16 +95,14 @@ def _build_response(
 def sync_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        RemoveCollectionResponse400,
-        RemoveCollectionResponse401,
-        RemoveCollectionResponse403,
-        RemoveCollectionResponse404,
-        RemoveCollectionResponse500,
-    ]
+    None
+    | RemoveCollectionResponse400
+    | RemoveCollectionResponse401
+    | RemoveCollectionResponse403
+    | RemoveCollectionResponse404
+    | RemoveCollectionResponse500
 ]:
     """Delete collection
 
@@ -117,7 +116,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, RemoveCollectionResponse400, RemoveCollectionResponse401, RemoveCollectionResponse403, RemoveCollectionResponse404, RemoveCollectionResponse500]]
+        Response[None | RemoveCollectionResponse400 | RemoveCollectionResponse401 | RemoveCollectionResponse403 | RemoveCollectionResponse404 | RemoveCollectionResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -134,17 +133,16 @@ def sync_detailed(
 def sync(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        RemoveCollectionResponse400,
-        RemoveCollectionResponse401,
-        RemoveCollectionResponse403,
-        RemoveCollectionResponse404,
-        RemoveCollectionResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | RemoveCollectionResponse400
+    | RemoveCollectionResponse401
+    | RemoveCollectionResponse403
+    | RemoveCollectionResponse404
+    | RemoveCollectionResponse500
+    | None
+):
     """Delete collection
 
      Deletes a record of type Collection.
@@ -157,7 +155,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, RemoveCollectionResponse400, RemoveCollectionResponse401, RemoveCollectionResponse403, RemoveCollectionResponse404, RemoveCollectionResponse500]
+        None | RemoveCollectionResponse400 | RemoveCollectionResponse401 | RemoveCollectionResponse403 | RemoveCollectionResponse404 | RemoveCollectionResponse500
     """
 
     return sync_detailed(
@@ -169,16 +167,14 @@ def sync(
 async def asyncio_detailed(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        None,
-        RemoveCollectionResponse400,
-        RemoveCollectionResponse401,
-        RemoveCollectionResponse403,
-        RemoveCollectionResponse404,
-        RemoveCollectionResponse500,
-    ]
+    None
+    | RemoveCollectionResponse400
+    | RemoveCollectionResponse401
+    | RemoveCollectionResponse403
+    | RemoveCollectionResponse404
+    | RemoveCollectionResponse500
 ]:
     """Delete collection
 
@@ -192,7 +188,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[None, RemoveCollectionResponse400, RemoveCollectionResponse401, RemoveCollectionResponse403, RemoveCollectionResponse404, RemoveCollectionResponse500]]
+        Response[None | RemoveCollectionResponse400 | RemoveCollectionResponse401 | RemoveCollectionResponse403 | RemoveCollectionResponse404 | RemoveCollectionResponse500]
     """
 
     kwargs = _get_kwargs(
@@ -207,17 +203,16 @@ async def asyncio_detailed(
 async def asyncio(
     collection_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        None,
-        RemoveCollectionResponse400,
-        RemoveCollectionResponse401,
-        RemoveCollectionResponse403,
-        RemoveCollectionResponse404,
-        RemoveCollectionResponse500,
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    None
+    | RemoveCollectionResponse400
+    | RemoveCollectionResponse401
+    | RemoveCollectionResponse403
+    | RemoveCollectionResponse404
+    | RemoveCollectionResponse500
+    | None
+):
     """Delete collection
 
      Deletes a record of type Collection.
@@ -230,7 +225,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[None, RemoveCollectionResponse400, RemoveCollectionResponse401, RemoveCollectionResponse403, RemoveCollectionResponse404, RemoveCollectionResponse500]
+        None | RemoveCollectionResponse400 | RemoveCollectionResponse401 | RemoveCollectionResponse403 | RemoveCollectionResponse404 | RemoveCollectionResponse500
     """
 
     return (

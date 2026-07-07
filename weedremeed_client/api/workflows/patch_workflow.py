@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -24,7 +25,9 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "patch",
-        "url": f"/weedremeed-api/workflow/{workflow_id}",
+        "url": "/weedremeed-api/workflow/{workflow_id}".format(
+            workflow_id=quote(str(workflow_id), safe=""),
+        ),
     }
 
     _kwargs["json"] = body.to_dict()
@@ -36,17 +39,16 @@ def _get_kwargs(
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        PatchWorkflowResponse400,
-        PatchWorkflowResponse401,
-        PatchWorkflowResponse403,
-        PatchWorkflowResponse404,
-        PatchWorkflowResponse500,
-        Workflow,
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    PatchWorkflowResponse400
+    | PatchWorkflowResponse401
+    | PatchWorkflowResponse403
+    | PatchWorkflowResponse404
+    | PatchWorkflowResponse500
+    | Workflow
+    | None
+):
     if response.status_code == 200:
         response_200 = Workflow.from_dict(response.json())
 
@@ -84,16 +86,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        PatchWorkflowResponse400,
-        PatchWorkflowResponse401,
-        PatchWorkflowResponse403,
-        PatchWorkflowResponse404,
-        PatchWorkflowResponse500,
-        Workflow,
-    ]
+    PatchWorkflowResponse400
+    | PatchWorkflowResponse401
+    | PatchWorkflowResponse403
+    | PatchWorkflowResponse404
+    | PatchWorkflowResponse500
+    | Workflow
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -106,17 +106,15 @@ def _build_response(
 def sync_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowPartialUpdate,
 ) -> Response[
-    Union[
-        PatchWorkflowResponse400,
-        PatchWorkflowResponse401,
-        PatchWorkflowResponse403,
-        PatchWorkflowResponse404,
-        PatchWorkflowResponse500,
-        Workflow,
-    ]
+    PatchWorkflowResponse400
+    | PatchWorkflowResponse401
+    | PatchWorkflowResponse403
+    | PatchWorkflowResponse404
+    | PatchWorkflowResponse500
+    | Workflow
 ]:
     """Patch workflow
 
@@ -132,7 +130,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[PatchWorkflowResponse400, PatchWorkflowResponse401, PatchWorkflowResponse403, PatchWorkflowResponse404, PatchWorkflowResponse500, Workflow]]
+        Response[PatchWorkflowResponse400 | PatchWorkflowResponse401 | PatchWorkflowResponse403 | PatchWorkflowResponse404 | PatchWorkflowResponse500 | Workflow]
     """
 
     kwargs = _get_kwargs(
@@ -150,18 +148,17 @@ def sync_detailed(
 def sync(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowPartialUpdate,
-) -> Optional[
-    Union[
-        PatchWorkflowResponse400,
-        PatchWorkflowResponse401,
-        PatchWorkflowResponse403,
-        PatchWorkflowResponse404,
-        PatchWorkflowResponse500,
-        Workflow,
-    ]
-]:
+) -> (
+    PatchWorkflowResponse400
+    | PatchWorkflowResponse401
+    | PatchWorkflowResponse403
+    | PatchWorkflowResponse404
+    | PatchWorkflowResponse500
+    | Workflow
+    | None
+):
     """Patch workflow
 
      Partially updates a record of type Workflow.
@@ -176,7 +173,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[PatchWorkflowResponse400, PatchWorkflowResponse401, PatchWorkflowResponse403, PatchWorkflowResponse404, PatchWorkflowResponse500, Workflow]
+        PatchWorkflowResponse400 | PatchWorkflowResponse401 | PatchWorkflowResponse403 | PatchWorkflowResponse404 | PatchWorkflowResponse500 | Workflow
     """
 
     return sync_detailed(
@@ -189,17 +186,15 @@ def sync(
 async def asyncio_detailed(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowPartialUpdate,
 ) -> Response[
-    Union[
-        PatchWorkflowResponse400,
-        PatchWorkflowResponse401,
-        PatchWorkflowResponse403,
-        PatchWorkflowResponse404,
-        PatchWorkflowResponse500,
-        Workflow,
-    ]
+    PatchWorkflowResponse400
+    | PatchWorkflowResponse401
+    | PatchWorkflowResponse403
+    | PatchWorkflowResponse404
+    | PatchWorkflowResponse500
+    | Workflow
 ]:
     """Patch workflow
 
@@ -215,7 +210,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[PatchWorkflowResponse400, PatchWorkflowResponse401, PatchWorkflowResponse403, PatchWorkflowResponse404, PatchWorkflowResponse500, Workflow]]
+        Response[PatchWorkflowResponse400 | PatchWorkflowResponse401 | PatchWorkflowResponse403 | PatchWorkflowResponse404 | PatchWorkflowResponse500 | Workflow]
     """
 
     kwargs = _get_kwargs(
@@ -231,18 +226,17 @@ async def asyncio_detailed(
 async def asyncio(
     workflow_id: str,
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
     body: WorkflowPartialUpdate,
-) -> Optional[
-    Union[
-        PatchWorkflowResponse400,
-        PatchWorkflowResponse401,
-        PatchWorkflowResponse403,
-        PatchWorkflowResponse404,
-        PatchWorkflowResponse500,
-        Workflow,
-    ]
-]:
+) -> (
+    PatchWorkflowResponse400
+    | PatchWorkflowResponse401
+    | PatchWorkflowResponse403
+    | PatchWorkflowResponse404
+    | PatchWorkflowResponse500
+    | Workflow
+    | None
+):
     """Patch workflow
 
      Partially updates a record of type Workflow.
@@ -257,7 +251,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[PatchWorkflowResponse400, PatchWorkflowResponse401, PatchWorkflowResponse403, PatchWorkflowResponse404, PatchWorkflowResponse500, Workflow]
+        PatchWorkflowResponse400 | PatchWorkflowResponse401 | PatchWorkflowResponse403 | PatchWorkflowResponse404 | PatchWorkflowResponse500 | Workflow
     """
 
     return (

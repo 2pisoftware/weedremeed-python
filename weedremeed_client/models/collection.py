@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,9 +30,9 @@ class Collection:
         size (int):
         id (str):
         project_id (str):
-        description (Union[Unset, str]):
-        metadata (Union[Unset, CollectionMetadata]):
-        dt_modified (Union[Unset, str]): ISO8601
+        description (str | Unset):
+        metadata (CollectionMetadata | Unset):
+        dt_modified (str | Unset): ISO8601
     """
 
     title: str
@@ -41,9 +43,9 @@ class Collection:
     id: str
     project_id: str
     type_: CollectionType = CollectionType.EMPTY
-    description: Union[Unset, str] = UNSET
-    metadata: Union[Unset, "CollectionMetadata"] = UNSET
-    dt_modified: Union[Unset, str] = UNSET
+    description: str | Unset = UNSET
+    metadata: CollectionMetadata | Unset = UNSET
+    dt_modified: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -65,7 +67,7 @@ class Collection:
 
         description = self.description
 
-        metadata: Union[Unset, dict[str, Any]] = UNSET
+        metadata: dict[str, Any] | Unset = UNSET
         if not isinstance(self.metadata, Unset):
             metadata = self.metadata.to_dict()
 
@@ -118,7 +120,7 @@ class Collection:
         description = d.pop("description", UNSET)
 
         _metadata = d.pop("metadata", UNSET)
-        metadata: Union[Unset, CollectionMetadata]
+        metadata: CollectionMetadata | Unset
         if isinstance(_metadata, Unset):
             metadata = UNSET
         else:

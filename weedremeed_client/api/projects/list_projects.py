@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
 
 import httpx
 
@@ -15,6 +15,7 @@ from ...types import Response
 
 
 def _get_kwargs() -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/weedremeed-api/project",
@@ -24,17 +25,16 @@ def _get_kwargs() -> dict[str, Any]:
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[
-    Union[
-        ListProjectsResponse400,
-        ListProjectsResponse401,
-        ListProjectsResponse403,
-        ListProjectsResponse404,
-        ListProjectsResponse500,
-        list["ProjectSummary"],
-    ]
-]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> (
+    ListProjectsResponse400
+    | ListProjectsResponse401
+    | ListProjectsResponse403
+    | ListProjectsResponse404
+    | ListProjectsResponse500
+    | list[ProjectSummary]
+    | None
+):
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -77,16 +77,14 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[
-    Union[
-        ListProjectsResponse400,
-        ListProjectsResponse401,
-        ListProjectsResponse403,
-        ListProjectsResponse404,
-        ListProjectsResponse500,
-        list["ProjectSummary"],
-    ]
+    ListProjectsResponse400
+    | ListProjectsResponse401
+    | ListProjectsResponse403
+    | ListProjectsResponse404
+    | ListProjectsResponse500
+    | list[ProjectSummary]
 ]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -98,16 +96,14 @@ def _build_response(
 
 def sync_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        ListProjectsResponse400,
-        ListProjectsResponse401,
-        ListProjectsResponse403,
-        ListProjectsResponse404,
-        ListProjectsResponse500,
-        list["ProjectSummary"],
-    ]
+    ListProjectsResponse400
+    | ListProjectsResponse401
+    | ListProjectsResponse403
+    | ListProjectsResponse404
+    | ListProjectsResponse500
+    | list[ProjectSummary]
 ]:
     """List project
 
@@ -118,7 +114,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ListProjectsResponse400, ListProjectsResponse401, ListProjectsResponse403, ListProjectsResponse404, ListProjectsResponse500, list['ProjectSummary']]]
+        Response[ListProjectsResponse400 | ListProjectsResponse401 | ListProjectsResponse403 | ListProjectsResponse404 | ListProjectsResponse500 | list[ProjectSummary]]
     """
 
     kwargs = _get_kwargs()
@@ -132,17 +128,16 @@ def sync_detailed(
 
 def sync(
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        ListProjectsResponse400,
-        ListProjectsResponse401,
-        ListProjectsResponse403,
-        ListProjectsResponse404,
-        ListProjectsResponse500,
-        list["ProjectSummary"],
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    ListProjectsResponse400
+    | ListProjectsResponse401
+    | ListProjectsResponse403
+    | ListProjectsResponse404
+    | ListProjectsResponse500
+    | list[ProjectSummary]
+    | None
+):
     """List project
 
      Returns a list of Project records.
@@ -152,7 +147,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ListProjectsResponse400, ListProjectsResponse401, ListProjectsResponse403, ListProjectsResponse404, ListProjectsResponse500, list['ProjectSummary']]
+        ListProjectsResponse400 | ListProjectsResponse401 | ListProjectsResponse403 | ListProjectsResponse404 | ListProjectsResponse500 | list[ProjectSummary]
     """
 
     return sync_detailed(
@@ -162,16 +157,14 @@ def sync(
 
 async def asyncio_detailed(
     *,
-    client: Union[AuthenticatedClient, Client],
+    client: AuthenticatedClient | Client,
 ) -> Response[
-    Union[
-        ListProjectsResponse400,
-        ListProjectsResponse401,
-        ListProjectsResponse403,
-        ListProjectsResponse404,
-        ListProjectsResponse500,
-        list["ProjectSummary"],
-    ]
+    ListProjectsResponse400
+    | ListProjectsResponse401
+    | ListProjectsResponse403
+    | ListProjectsResponse404
+    | ListProjectsResponse500
+    | list[ProjectSummary]
 ]:
     """List project
 
@@ -182,7 +175,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Union[ListProjectsResponse400, ListProjectsResponse401, ListProjectsResponse403, ListProjectsResponse404, ListProjectsResponse500, list['ProjectSummary']]]
+        Response[ListProjectsResponse400 | ListProjectsResponse401 | ListProjectsResponse403 | ListProjectsResponse404 | ListProjectsResponse500 | list[ProjectSummary]]
     """
 
     kwargs = _get_kwargs()
@@ -194,17 +187,16 @@ async def asyncio_detailed(
 
 async def asyncio(
     *,
-    client: Union[AuthenticatedClient, Client],
-) -> Optional[
-    Union[
-        ListProjectsResponse400,
-        ListProjectsResponse401,
-        ListProjectsResponse403,
-        ListProjectsResponse404,
-        ListProjectsResponse500,
-        list["ProjectSummary"],
-    ]
-]:
+    client: AuthenticatedClient | Client,
+) -> (
+    ListProjectsResponse400
+    | ListProjectsResponse401
+    | ListProjectsResponse403
+    | ListProjectsResponse404
+    | ListProjectsResponse500
+    | list[ProjectSummary]
+    | None
+):
     """List project
 
      Returns a list of Project records.
@@ -214,7 +206,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Union[ListProjectsResponse400, ListProjectsResponse401, ListProjectsResponse403, ListProjectsResponse404, ListProjectsResponse500, list['ProjectSummary']]
+        ListProjectsResponse400 | ListProjectsResponse401 | ListProjectsResponse403 | ListProjectsResponse404 | ListProjectsResponse500 | list[ProjectSummary]
     """
 
     return (

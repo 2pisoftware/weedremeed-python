@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -20,9 +22,9 @@ class ColourPickerTool:
         retention (int):
         colour_space (ColourPickerToolColourSpace):
         bound_dilation (int): detection expansion (pixels)
-        bound_colour (Union[Unset, str]):
-        pen_weight (Union[Unset, float]):
-        max_collation (Union[Unset, str]):
+        bound_colour (str | Unset):
+        pen_weight (float | Unset):
+        max_collation (str | Unset):
     """
 
     attachment_id: str
@@ -30,9 +32,9 @@ class ColourPickerTool:
     retention: int
     colour_space: ColourPickerToolColourSpace
     bound_dilation: int
-    bound_colour: Union[Unset, str] = UNSET
-    pen_weight: Union[Unset, float] = UNSET
-    max_collation: Union[Unset, str] = UNSET
+    bound_colour: str | Unset = UNSET
+    pen_weight: float | Unset = UNSET
+    max_collation: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
